@@ -34,6 +34,10 @@ class SearchScreen extends StatelessWidget {
             scrollDirection: Axis.vertical,
             child: Column(
               children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * 16 / 812,
+                ),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
@@ -44,7 +48,9 @@ class SearchScreen extends StatelessWidget {
                         margin: EdgeInsets.only(
                             right: MediaQuery.of(context).size.width * 8 / 375),
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            _showBottomSheet(context);
+                          },
                           style: ElevatedButton.styleFrom(
                               minimumSize: Size(
                                   MediaQuery.of(context).size.width * 75 / 375,
@@ -69,7 +75,7 @@ class SearchScreen extends StatelessWidget {
                                           16 /
                                           375)),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const Icon(
                                 Icons.filter_alt_outlined,
@@ -291,6 +297,116 @@ class SearchScreen extends StatelessWidget {
                     ],
                   ),
                 ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * 25 / 812,
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text.rich(TextSpan(
+                      style: GoogleFonts.nunito(
+                        color: const Color(0xFF2D0505),
+                        fontSize: 14,
+                      ),
+                      children: const [
+                        TextSpan(
+                          text: 'About 11,130,000 results for ',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        TextSpan(
+                          text: 'COVID New Variant',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                          ),
+                        )
+                      ])),
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * 16 / 812,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                      right: MediaQuery.of(context).size.width * 15 / 375),
+                  child: Column(
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width * 345 / 375,
+                        height: MediaQuery.of(context).size.height * 128 / 812,
+                        margin: EdgeInsets.only(
+                            bottom:
+                                MediaQuery.of(context).size.height * 8 / 812),
+                        decoration: ShapeDecoration(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                        ),
+                        child: Image.asset(
+                          'assets/images/family.png',
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 345 / 375,
+                        height: MediaQuery.of(context).size.height * 128 / 812,
+                        margin: EdgeInsets.only(
+                            bottom:
+                                MediaQuery.of(context).size.height * 8 / 812),
+                        decoration: ShapeDecoration(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                        ),
+                        child: Image.asset(
+                          'assets/images/doc.png',
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 345 / 375,
+                        height: MediaQuery.of(context).size.height * 128 / 812,
+                        margin: EdgeInsets.only(
+                            bottom:
+                                MediaQuery.of(context).size.height * 8 / 812),
+                        decoration: ShapeDecoration(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                        ),
+                        child: Image.asset(
+                          'assets/images/family.png',
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 345 / 375,
+                        height: MediaQuery.of(context).size.height * 128 / 812,
+                        margin: EdgeInsets.only(
+                            bottom:
+                                MediaQuery.of(context).size.height * 8 / 812),
+                        decoration: ShapeDecoration(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                        ),
+                        child: Image.asset(
+                          'assets/images/doc.png',
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 345 / 375,
+                        height: MediaQuery.of(context).size.height * 128 / 812,
+                        decoration: ShapeDecoration(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                        ),
+                        child: Image.asset(
+                          'assets/images/businessman.jpg',
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -298,4 +414,19 @@ class SearchScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+void _showBottomSheet(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    builder: (BuildContext context) {
+      return Container(
+        height: 200, // Adjust the height as needed
+        color: Colors.white,
+        child: const Center(
+          child: Text('This is a bottom sheet'),
+        ),
+      );
+    },
+  );
 }
