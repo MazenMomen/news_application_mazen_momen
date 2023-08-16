@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_application_mazen_momen/notifications.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,10 +14,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFFF3A44)),
         useMaterial3: true,
       ),
-      home: const MyHomePage(),
+      home: const Notifications(),
     );
   }
 }
