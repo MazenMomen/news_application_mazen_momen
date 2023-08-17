@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:news_application_mazen_momen/search_screen.dart';
+import 'package:news_application_mazen_momen/notifications_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFFF3A44)),
         useMaterial3: true,
       ),
-      home: const SearchScreen(),
+      home: const NotificationsScreen(),
     );
   }
 }

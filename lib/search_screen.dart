@@ -421,11 +421,327 @@ void _showBottomSheet(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return Container(
-        height: 200, // Adjust the height as needed
-        color: Colors.white,
-        child: const Center(
-          child: Text('This is a bottom sheet'),
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height * 315 / 812,
+        decoration: const ShapeDecoration(
+          color: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(14),
+              topRight: Radius.circular(14),
+            ),
+          ),
         ),
+        child: Center(
+            child: Padding(
+          padding: EdgeInsets.symmetric(
+              horizontal: MediaQuery.of(context).size.width * 15 / 375,
+              vertical: MediaQuery.of(context).size.height * 8 / 812),
+          child: Column(
+            children: [
+              Image.asset(
+                'assets/images/bigRectangle.png',
+                width: MediaQuery.of(context).size.width * 72 / 375,
+                height: MediaQuery.of(context).size.height * 5 / 812,
+              ),
+              const Spacer(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Filter',
+                    style: GoogleFonts.nunito(
+                      color: const Color(0xFF031D2F),
+                      fontSize: 22,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                        minimumSize: Size(
+                            MediaQuery.of(context).size.width * 81.8 / 375,
+                            MediaQuery.of(context).size.height * 32 / 812),
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          side: const BorderSide(
+                            width: 0.50,
+                            strokeAlign: BorderSide.strokeAlignCenter,
+                            color: Color(0xFF031D2F),
+                          ),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        padding: EdgeInsets.symmetric(
+                            vertical:
+                                MediaQuery.of(context).size.height * 8 / 812,
+                            horizontal:
+                                MediaQuery.of(context).size.width * 16 / 375)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Icon(
+                          Icons.delete_outlined,
+                          color: Color(0xFF031D2F),
+                        ),
+                        Text(
+                          'Reset',
+                          style: GoogleFonts.nunito(
+                            color: const Color(0xFF031D2F),
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const Spacer(),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Sort By',
+                  style: GoogleFonts.nunito(
+                    color: const Color(0xFF031D2F),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * 8 / 812),
+              Row(
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width * 114 / 375,
+                    height: MediaQuery.of(context).size.height * 32 / 812,
+                    margin: EdgeInsets.only(
+                      right: MediaQuery.of(context).size.width * 8 / 375,
+                      bottom: MediaQuery.of(context).size.height * 8 / 812,
+                    ),
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                          minimumSize: Size(
+                              MediaQuery.of(context).size.width * 114 / 375,
+                              MediaQuery.of(context).size.height * 32 / 812),
+                          backgroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            side: const BorderSide(
+                              width: 0.50,
+                              strokeAlign: BorderSide.strokeAlignCenter,
+                              color: Color(0xFFEFF0FA),
+                            ),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                              vertical:
+                                  MediaQuery.of(context).size.height * 8 / 812,
+                              horizontal: MediaQuery.of(context).size.width *
+                                  16 /
+                                  375)),
+                      child: Text(
+                        'Recommended',
+                        style: GoogleFonts.nunito(
+                          color: const Color(0xFF031D2F),
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 66 / 375,
+                    height: MediaQuery.of(context).size.height * 32 / 812,
+                    margin: EdgeInsets.only(
+                        right: MediaQuery.of(context).size.width * 8 / 375,
+                        bottom: MediaQuery.of(context).size.height * 8 / 812),
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                          minimumSize: Size(
+                              MediaQuery.of(context).size.width * 66 / 375,
+                              MediaQuery.of(context).size.height * 32 / 812),
+                          backgroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            side: const BorderSide(
+                              width: 0.50,
+                              strokeAlign: BorderSide.strokeAlignCenter,
+                              color: Color(0xFFEFF0FA),
+                            ),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                              vertical:
+                                  MediaQuery.of(context).size.height * 8 / 812,
+                              horizontal: MediaQuery.of(context).size.width *
+                                  16 /
+                                  375)),
+                      child: Text(
+                        'Latest',
+                        style: GoogleFonts.nunito(
+                          color: const Color(0xFF031D2F),
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 104 / 375,
+                    height: MediaQuery.of(context).size.height * 32 / 812,
+                    margin: EdgeInsets.only(
+                        right: MediaQuery.of(context).size.width * 8 / 375,
+                        bottom: MediaQuery.of(context).size.height * 8 / 812),
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                          minimumSize: Size(
+                              MediaQuery.of(context).size.width * 104 / 375,
+                              MediaQuery.of(context).size.height * 32 / 812),
+                          backgroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            side: const BorderSide(
+                              width: 0.50,
+                              strokeAlign: BorderSide.strokeAlignCenter,
+                              color: Color(0xFFEFF0FA),
+                            ),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                              vertical:
+                                  MediaQuery.of(context).size.height * 8 / 812,
+                              horizontal: MediaQuery.of(context).size.width *
+                                  16 /
+                                  375)),
+                      child: Text(
+                        'Most Viewed',
+                        style: GoogleFonts.nunito(
+                          color: const Color(0xFF031D2F),
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width * 77 / 375,
+                    height: MediaQuery.of(context).size.height * 32 / 812,
+                    margin: EdgeInsets.only(
+                        right: MediaQuery.of(context).size.width * 8 / 375),
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                          minimumSize: Size(
+                              MediaQuery.of(context).size.width * 77 / 375,
+                              MediaQuery.of(context).size.height * 32 / 812),
+                          backgroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            side: const BorderSide(
+                              width: 0.50,
+                              strokeAlign: BorderSide.strokeAlignCenter,
+                              color: Color(0xFFEFF0FA),
+                            ),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                              vertical:
+                                  MediaQuery.of(context).size.height * 8 / 812,
+                              horizontal: MediaQuery.of(context).size.width *
+                                  16 /
+                                  375)),
+                      child: Text(
+                        'Channel',
+                        style: GoogleFonts.nunito(
+                          color: const Color(0xFF031D2F),
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 86 / 375,
+                    height: MediaQuery.of(context).size.height * 32 / 812,
+                    margin: EdgeInsets.only(
+                        right: MediaQuery.of(context).size.width * 8 / 375),
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                          minimumSize: Size(
+                              MediaQuery.of(context).size.width * 86 / 375,
+                              MediaQuery.of(context).size.height * 32 / 812),
+                          backgroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            side: const BorderSide(
+                              width: 0.50,
+                              strokeAlign: BorderSide.strokeAlignCenter,
+                              color: Color(0xFFEFF0FA),
+                            ),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                              vertical:
+                                  MediaQuery.of(context).size.height * 8 / 812,
+                              horizontal: MediaQuery.of(context).size.width *
+                                  16 /
+                                  375)),
+                      child: Text(
+                        'Following',
+                        style: GoogleFonts.nunito(
+                          color: const Color(0xFF031D2F),
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * 32 / 812),
+              ElevatedButton(
+                onPressed: () {
+                  _showBottomSheet(context);
+                },
+                style: ElevatedButton.styleFrom(
+                    minimumSize: Size(
+                        MediaQuery.of(context).size.width * 345 / 375,
+                        MediaQuery.of(context).size.height * 48 / 812),
+                    backgroundColor: const Color(0xFFFF3A44),
+                    shape: RoundedRectangleBorder(
+                      side: const BorderSide(
+                        width: 0.50,
+                        strokeAlign: BorderSide.strokeAlignCenter,
+                        color: Color(0xFFFFB2B6),
+                      ),
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    padding: EdgeInsets.symmetric(
+                      vertical: MediaQuery.of(context).size.height * 13 / 812,
+                    )),
+                child: Text(
+                  'SAVE',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.nunito(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+              ),
+              SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * 40 / 812),
+            ],
+          ),
+        )),
       );
     },
   );

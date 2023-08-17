@@ -95,7 +95,7 @@ class NotificationsScreen extends StatelessWidget {
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 128 / 812,
                     child: Image.asset(
-                      'assets/images/businessman.jpg',
+                      'assets/images/doc.png',
                       fit: BoxFit.fill,
                     ),
                   ),
