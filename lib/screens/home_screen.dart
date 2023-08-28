@@ -116,17 +116,17 @@ class HomeScreen extends StatelessWidget {
                           children: [
                             Container(
                                 width: MediaQuery.of(context).size.width *
-                                    321 /
+                                    300 /
                                     375,
                                 height: MediaQuery.of(context).size.height *
-                                    240 /
+                                    250 /
                                     812,
                                 margin: EdgeInsets.only(
                                     right: MediaQuery.of(context).size.width *
                                         8 /
                                         375),
-                                child: Image.asset(
-                                  'assets/images/investorWords.png',
+                                child: Image.network(
+                                  'https://img.freepik.com/premium-vector/blue-breaking-news-dark-blue-background-illustration-vector-news-concept_194782-1404.jpg?w=1060',
                                   fit: BoxFit.fill,
                                 )),
                             Opacity(
