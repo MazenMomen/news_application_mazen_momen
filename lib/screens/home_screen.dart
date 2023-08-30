@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:news_application_mazen_momen/data/cubits/get_news_cubit/get_news_cubit.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -54,445 +56,429 @@ class HomeScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(
                   left: MediaQuery.of(context).size.width * 15 / 375),
-              child: Center(
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height * 16 / 812,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            right:
-                                MediaQuery.of(context).size.width * 15 / 375),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              'Latest News',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 18,
-                                fontFamily: 'New York Small Regular',
-                                fontWeight: FontWeight.w700,
-                                height: 1.16,
-                              ),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 16 / 812,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          right: MediaQuery.of(context).size.width * 15 / 375),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'Latest News',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontFamily: 'New York Small Regular',
+                              fontWeight: FontWeight.w700,
+                              height: 1.16,
                             ),
-                            SizedBox(
-                              width:
-                                  MediaQuery.of(context).size.width * 67 / 375,
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                'See All',
+                                style: GoogleFonts.nunito(
+                                  color: const Color(0xFF0080FF),
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              IconButton(
+                                icon: const Icon(
+                                  Icons.arrow_forward,
+                                  color: Color(0xFF0080FF),
+                                  size: 12,
+                                ),
+                                onPressed: () {},
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 16 / 812,
+                    ),
+                    BlocBuilder<GetNewsCubit, GetNewsState>(
+                      builder: (context, state) {
+                        try {
+                          if (state is GetNewsInitial) {
+                            return const Text("Refresh for latest news");
+                          } else if (state is GetNewsLoading) {
+                            return const CircularProgressIndicator.adaptive();
+                          } else if (state is GetNewsSuccess) {
+                            return SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
                               child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    'See All',
-                                    style: GoogleFonts.nunito(
-                                      color: const Color(0xFF0080FF),
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  const Icon(
-                                    Icons.arrow_forward,
-                                    color: Color(0xFF0080FF),
-                                    size: 12,
-                                  )
+                                  for (int i = 0;
+                                      i < state.response.articles.length;
+                                      i++)
+                                    Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                300 /
+                                                375,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                250 /
+                                                812,
+                                        margin: EdgeInsets.only(
+                                            right: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                8 /
+                                                375),
+                                        decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                                image: NetworkImage(
+                                                  state.response.articles[i]
+                                                          .urlToImage ??
+                                                      "https://img.freepik.com/premium-vector/blue-breaking-news-dark-blue-background-illustration-vector-news-concept_194782-1404.jpg?w=1060",
+                                                ),
+                                                fit: BoxFit.fitWidth),
+                                            borderRadius:
+                                                BorderRadius.circular(8))),
                                 ],
                               ),
-                            )
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height * 16 / 812,
-                      ),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            Container(
-                                width: MediaQuery.of(context).size.width *
-                                    300 /
-                                    375,
-                                height: MediaQuery.of(context).size.height *
-                                    250 /
-                                    812,
-                                margin: EdgeInsets.only(
-                                    right: MediaQuery.of(context).size.width *
-                                        8 /
-                                        375),
-                                child: Image.network(
-                                  'https://img.freepik.com/premium-vector/blue-breaking-news-dark-blue-background-illustration-vector-news-concept_194782-1404.jpg?w=1060',
-                                  fit: BoxFit.fill,
-                                )),
-                            Opacity(
-                              opacity: 0.3,
-                              child: Container(
-                                  width: MediaQuery.of(context).size.width *
-                                      321 /
-                                      375,
-                                  height: MediaQuery.of(context).size.height *
-                                      224 /
-                                      812,
-                                  decoration: ShapeDecoration(
-                                    gradient: const LinearGradient(
-                                      begin: Alignment(-0.00, -1.00),
-                                      end: Alignment(0, 1),
-                                      colors: [Color(0x59626262), Colors.black],
+                            );
+                          } else {
+                            return const Text("Something went wrong!!");
+                          }
+                        } catch (error) {
+                          return const Text("Something went wrong!!");
+                        }
+                      },
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 23.5 / 812,
+                    ),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width * 75 / 375,
+                            height:
+                                MediaQuery.of(context).size.height * 32 / 812,
+                            margin: EdgeInsets.only(
+                                right: MediaQuery.of(context).size.width *
+                                    8 /
+                                    375),
+                            child: ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                  minimumSize: Size(
+                                      MediaQuery.of(context).size.width *
+                                          75 /
+                                          375,
+                                      MediaQuery.of(context).size.height *
+                                          32 /
+                                          812),
+                                  backgroundColor: const Color(0xFFFF3A44),
+                                  shape: RoundedRectangleBorder(
+                                    side: const BorderSide(
+                                      width: 0.50,
+                                      strokeAlign: BorderSide.strokeAlignCenter,
+                                      color: Color(0xFFFFB2B6),
                                     ),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(8)),
+                                    borderRadius: BorderRadius.circular(16),
                                   ),
-                                  child: Image.asset(
-                                    'assets/images/investorWords.png',
-                                    fit: BoxFit.fill,
-                                  )),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height * 23.5 / 812,
-                      ),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            Container(
-                              width:
-                                  MediaQuery.of(context).size.width * 75 / 375,
-                              height:
-                                  MediaQuery.of(context).size.height * 32 / 812,
-                              margin: EdgeInsets.only(
-                                  right: MediaQuery.of(context).size.width *
-                                      8 /
-                                      375),
-                              child: ElevatedButton(
-                                onPressed: () {},
-                                style: ElevatedButton.styleFrom(
-                                    minimumSize: Size(
-                                        MediaQuery.of(context).size.width *
-                                            75 /
-                                            375,
-                                        MediaQuery.of(context).size.height *
-                                            32 /
-                                            812),
-                                    backgroundColor: const Color(0xFFFF3A44),
-                                    shape: RoundedRectangleBorder(
-                                      side: const BorderSide(
-                                        width: 0.50,
-                                        strokeAlign:
-                                            BorderSide.strokeAlignCenter,
-                                        color: Color(0xFFFFB2B6),
-                                      ),
-                                      borderRadius: BorderRadius.circular(16),
-                                    ),
-                                    padding: EdgeInsets.symmetric(
-                                        vertical:
-                                            MediaQuery.of(context).size.height *
-                                                8 /
-                                                812,
-                                        horizontal:
-                                            MediaQuery.of(context).size.width *
-                                                16 /
-                                                375)),
-                                child: Text(
-                                  'Healthy',
-                                  style: GoogleFonts.nunito(
-                                    color: Colors.white,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                                  padding: EdgeInsets.symmetric(
+                                      vertical:
+                                          MediaQuery.of(context).size.height *
+                                              8 /
+                                              812,
+                                      horizontal:
+                                          MediaQuery.of(context).size.width *
+                                              16 /
+                                              375)),
+                              child: Text(
+                                'Healthy',
+                                style: GoogleFonts.nunito(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ),
-                            Container(
-                              width:
-                                  MediaQuery.of(context).size.width * 95 / 375,
-                              height:
-                                  MediaQuery.of(context).size.height * 32 / 812,
-                              margin: EdgeInsets.only(
-                                  right: MediaQuery.of(context).size.width *
-                                      8 /
-                                      375),
-                              child: ElevatedButton(
-                                onPressed: () {},
-                                style: ElevatedButton.styleFrom(
-                                    minimumSize: Size(
-                                        MediaQuery.of(context).size.width *
-                                            95 /
-                                            375,
-                                        MediaQuery.of(context).size.height *
-                                            32 /
-                                            812),
-                                    backgroundColor: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                      side: const BorderSide(
-                                        width: 0.50,
-                                        strokeAlign:
-                                            BorderSide.strokeAlignCenter,
-                                        color: Color(0xFFEFF0FA),
-                                      ),
-                                      borderRadius: BorderRadius.circular(16),
+                          ),
+                          Container(
+                            width: MediaQuery.of(context).size.width * 95 / 375,
+                            height:
+                                MediaQuery.of(context).size.height * 32 / 812,
+                            margin: EdgeInsets.only(
+                                right: MediaQuery.of(context).size.width *
+                                    8 /
+                                    375),
+                            child: ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                  minimumSize: Size(
+                                      MediaQuery.of(context).size.width *
+                                          95 /
+                                          375,
+                                      MediaQuery.of(context).size.height *
+                                          32 /
+                                          812),
+                                  backgroundColor: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    side: const BorderSide(
+                                      width: 0.50,
+                                      strokeAlign: BorderSide.strokeAlignCenter,
+                                      color: Color(0xFFEFF0FA),
                                     ),
-                                    padding: EdgeInsets.symmetric(
-                                        vertical:
-                                            MediaQuery.of(context).size.height *
-                                                8 /
-                                                812,
-                                        horizontal:
-                                            MediaQuery.of(context).size.width *
-                                                16 /
-                                                375)),
-                                child: Text(
-                                  'Technology',
-                                  style: GoogleFonts.nunito(
-                                    color: const Color(0xFF2D0505),
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
+                                    borderRadius: BorderRadius.circular(16),
                                   ),
+                                  padding: EdgeInsets.symmetric(
+                                      vertical:
+                                          MediaQuery.of(context).size.height *
+                                              8 /
+                                              812,
+                                      horizontal:
+                                          MediaQuery.of(context).size.width *
+                                              16 /
+                                              375)),
+                              child: Text(
+                                'Technology',
+                                style: GoogleFonts.nunito(
+                                  color: const Color(0xFF2D0505),
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ),
-                            Container(
-                              width:
-                                  MediaQuery.of(context).size.width * 75 / 375,
-                              height:
-                                  MediaQuery.of(context).size.height * 32 / 812,
-                              margin: EdgeInsets.only(
-                                  right: MediaQuery.of(context).size.width *
-                                      8 /
-                                      375),
-                              child: ElevatedButton(
-                                onPressed: () {},
-                                style: ElevatedButton.styleFrom(
-                                    minimumSize: Size(
-                                        MediaQuery.of(context).size.width *
-                                            75 /
-                                            375,
-                                        MediaQuery.of(context).size.height *
-                                            32 /
-                                            812),
-                                    backgroundColor: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                      side: const BorderSide(
-                                        width: 0.50,
-                                        strokeAlign:
-                                            BorderSide.strokeAlignCenter,
-                                        color: Color(0xFFEFF0FA),
-                                      ),
-                                      borderRadius: BorderRadius.circular(16),
+                          ),
+                          Container(
+                            width: MediaQuery.of(context).size.width * 75 / 375,
+                            height:
+                                MediaQuery.of(context).size.height * 32 / 812,
+                            margin: EdgeInsets.only(
+                                right: MediaQuery.of(context).size.width *
+                                    8 /
+                                    375),
+                            child: ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                  minimumSize: Size(
+                                      MediaQuery.of(context).size.width *
+                                          75 /
+                                          375,
+                                      MediaQuery.of(context).size.height *
+                                          32 /
+                                          812),
+                                  backgroundColor: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    side: const BorderSide(
+                                      width: 0.50,
+                                      strokeAlign: BorderSide.strokeAlignCenter,
+                                      color: Color(0xFFEFF0FA),
                                     ),
-                                    padding: EdgeInsets.symmetric(
-                                        vertical:
-                                            MediaQuery.of(context).size.height *
-                                                8 /
-                                                812,
-                                        horizontal:
-                                            MediaQuery.of(context).size.width *
-                                                16 /
-                                                375)),
-                                child: Text(
-                                  'Finance',
-                                  style: GoogleFonts.nunito(
-                                    color: const Color(0xFF2D0505),
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
+                                    borderRadius: BorderRadius.circular(16),
                                   ),
+                                  padding: EdgeInsets.symmetric(
+                                      vertical:
+                                          MediaQuery.of(context).size.height *
+                                              8 /
+                                              812,
+                                      horizontal:
+                                          MediaQuery.of(context).size.width *
+                                              16 /
+                                              375)),
+                              child: Text(
+                                'Finance',
+                                style: GoogleFonts.nunito(
+                                  color: const Color(0xFF2D0505),
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ),
-                            Container(
-                              width:
-                                  MediaQuery.of(context).size.width * 56 / 375,
-                              height:
-                                  MediaQuery.of(context).size.height * 32 / 812,
-                              margin: EdgeInsets.only(
-                                  right: MediaQuery.of(context).size.width *
-                                      8 /
-                                      375),
-                              child: ElevatedButton(
-                                onPressed: () {},
-                                style: ElevatedButton.styleFrom(
-                                    minimumSize: Size(
-                                        MediaQuery.of(context).size.width *
-                                            56 /
-                                            375,
-                                        MediaQuery.of(context).size.height *
-                                            32 /
-                                            812),
-                                    backgroundColor: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                      side: const BorderSide(
-                                        width: 0.50,
-                                        strokeAlign:
-                                            BorderSide.strokeAlignCenter,
-                                        color: Color(0xFFEFF0FA),
-                                      ),
-                                      borderRadius: BorderRadius.circular(16),
+                          ),
+                          Container(
+                            width: MediaQuery.of(context).size.width * 56 / 375,
+                            height:
+                                MediaQuery.of(context).size.height * 32 / 812,
+                            margin: EdgeInsets.only(
+                                right: MediaQuery.of(context).size.width *
+                                    8 /
+                                    375),
+                            child: ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                  minimumSize: Size(
+                                      MediaQuery.of(context).size.width *
+                                          56 /
+                                          375,
+                                      MediaQuery.of(context).size.height *
+                                          32 /
+                                          812),
+                                  backgroundColor: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    side: const BorderSide(
+                                      width: 0.50,
+                                      strokeAlign: BorderSide.strokeAlignCenter,
+                                      color: Color(0xFFEFF0FA),
                                     ),
-                                    padding: EdgeInsets.symmetric(
-                                        vertical:
-                                            MediaQuery.of(context).size.height *
-                                                8 /
-                                                812,
-                                        horizontal:
-                                            MediaQuery.of(context).size.width *
-                                                16 /
-                                                375)),
-                                child: Text(
-                                  'Arts',
-                                  style: GoogleFonts.nunito(
-                                    color: const Color(0xFF2D0505),
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
+                                    borderRadius: BorderRadius.circular(16),
                                   ),
+                                  padding: EdgeInsets.symmetric(
+                                      vertical:
+                                          MediaQuery.of(context).size.height *
+                                              8 /
+                                              812,
+                                      horizontal:
+                                          MediaQuery.of(context).size.width *
+                                              16 /
+                                              375)),
+                              child: Text(
+                                'Arts',
+                                style: GoogleFonts.nunito(
+                                  color: const Color(0xFF2D0505),
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ),
-                            Container(
-                              width:
-                                  MediaQuery.of(context).size.width * 69 / 375,
-                              height:
-                                  MediaQuery.of(context).size.height * 32 / 812,
-                              margin: EdgeInsets.only(
-                                  right: MediaQuery.of(context).size.width *
-                                      8 /
-                                      375),
-                              child: ElevatedButton(
-                                onPressed: () {},
-                                style: ElevatedButton.styleFrom(
-                                    minimumSize: Size(
-                                        MediaQuery.of(context).size.width *
-                                            69 /
-                                            375,
-                                        MediaQuery.of(context).size.height *
-                                            32 /
-                                            812),
-                                    backgroundColor: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                      side: const BorderSide(
-                                        width: 0.50,
-                                        strokeAlign:
-                                            BorderSide.strokeAlignCenter,
-                                        color: Color(0xFFEFF0FA),
-                                      ),
-                                      borderRadius: BorderRadius.circular(16),
+                          ),
+                          Container(
+                            width: MediaQuery.of(context).size.width * 69 / 375,
+                            height:
+                                MediaQuery.of(context).size.height * 32 / 812,
+                            margin: EdgeInsets.only(
+                                right: MediaQuery.of(context).size.width *
+                                    8 /
+                                    375),
+                            child: ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                  minimumSize: Size(
+                                      MediaQuery.of(context).size.width *
+                                          69 /
+                                          375,
+                                      MediaQuery.of(context).size.height *
+                                          32 /
+                                          812),
+                                  backgroundColor: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    side: const BorderSide(
+                                      width: 0.50,
+                                      strokeAlign: BorderSide.strokeAlignCenter,
+                                      color: Color(0xFFEFF0FA),
                                     ),
-                                    padding: EdgeInsets.symmetric(
-                                        vertical:
-                                            MediaQuery.of(context).size.height *
-                                                8 /
-                                                812,
-                                        horizontal:
-                                            MediaQuery.of(context).size.width *
-                                                16 /
-                                                375)),
-                                child: Text(
-                                  'Sports',
-                                  style: GoogleFonts.nunito(
-                                    color: const Color(0xFF2D0505),
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
+                                    borderRadius: BorderRadius.circular(16),
                                   ),
+                                  padding: EdgeInsets.symmetric(
+                                      vertical:
+                                          MediaQuery.of(context).size.height *
+                                              8 /
+                                              812,
+                                      horizontal:
+                                          MediaQuery.of(context).size.width *
+                                              16 /
+                                              375)),
+                              child: Text(
+                                'Sports',
+                                style: GoogleFonts.nunito(
+                                  color: const Color(0xFF2D0505),
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height * 16 / 812,
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 16 / 812,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          right: MediaQuery.of(context).size.width * 15 / 375),
+                      child: Column(
+                        children: [
+                          Container(
+                            width:
+                                MediaQuery.of(context).size.width * 345 / 375,
+                            height:
+                                MediaQuery.of(context).size.height * 128 / 812,
+                            margin: EdgeInsets.only(
+                                bottom: MediaQuery.of(context).size.height *
+                                    8 /
+                                    812),
+                            decoration: ShapeDecoration(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8)),
+                            ),
+                            child: Image.asset(
+                              'assets/images/doc.png',
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                          Container(
+                            width:
+                                MediaQuery.of(context).size.width * 345 / 375,
+                            height:
+                                MediaQuery.of(context).size.height * 128 / 812,
+                            margin: EdgeInsets.only(
+                                bottom: MediaQuery.of(context).size.height *
+                                    8 /
+                                    812),
+                            decoration: ShapeDecoration(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8)),
+                            ),
+                            child: Image.asset(
+                              'assets/images/family.png',
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                          Container(
+                            width:
+                                MediaQuery.of(context).size.width * 345 / 375,
+                            height:
+                                MediaQuery.of(context).size.height * 128 / 812,
+                            margin: EdgeInsets.only(
+                                bottom: MediaQuery.of(context).size.height *
+                                    8 /
+                                    812),
+                            decoration: ShapeDecoration(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8)),
+                            ),
+                            child: Image.asset(
+                              'assets/images/doc.png',
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                          Container(
+                            width:
+                                MediaQuery.of(context).size.width * 345 / 375,
+                            height:
+                                MediaQuery.of(context).size.height * 128 / 812,
+                            decoration: ShapeDecoration(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8)),
+                            ),
+                            child: Image.asset(
+                              'assets/images/businessman.jpg',
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            right:
-                                MediaQuery.of(context).size.width * 15 / 375),
-                        child: Column(
-                          children: [
-                            Container(
-                              width:
-                                  MediaQuery.of(context).size.width * 345 / 375,
-                              height: MediaQuery.of(context).size.height *
-                                  128 /
-                                  812,
-                              margin: EdgeInsets.only(
-                                  bottom: MediaQuery.of(context).size.height *
-                                      8 /
-                                      812),
-                              decoration: ShapeDecoration(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8)),
-                              ),
-                              child: Image.asset(
-                                'assets/images/doc.png',
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                            Container(
-                              width:
-                                  MediaQuery.of(context).size.width * 345 / 375,
-                              height: MediaQuery.of(context).size.height *
-                                  128 /
-                                  812,
-                              margin: EdgeInsets.only(
-                                  bottom: MediaQuery.of(context).size.height *
-                                      8 /
-                                      812),
-                              decoration: ShapeDecoration(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8)),
-                              ),
-                              child: Image.asset(
-                                'assets/images/family.png',
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                            Container(
-                              width:
-                                  MediaQuery.of(context).size.width * 345 / 375,
-                              height: MediaQuery.of(context).size.height *
-                                  128 /
-                                  812,
-                              margin: EdgeInsets.only(
-                                  bottom: MediaQuery.of(context).size.height *
-                                      8 /
-                                      812),
-                              decoration: ShapeDecoration(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8)),
-                              ),
-                              child: Image.asset(
-                                'assets/images/doc.png',
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                            Container(
-                              width:
-                                  MediaQuery.of(context).size.width * 345 / 375,
-                              height: MediaQuery.of(context).size.height *
-                                  128 /
-                                  812,
-                              decoration: ShapeDecoration(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8)),
-                              ),
-                              child: Image.asset(
-                                'assets/images/businessman.jpg',
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -580,6 +566,19 @@ class HomeScreen extends StatelessWidget {
                       const Spacer(),
                     ],
                   ),
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: FloatingActionButton(
+                  shape: const CircleBorder(),
+                  onPressed: () {
+                    context.read<GetNewsCubit>().getNews();
+                  },
+                  child: const Icon(Icons.refresh),
                 ),
               ),
             )
